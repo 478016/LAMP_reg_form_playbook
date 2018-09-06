@@ -1,0 +1,26 @@
+---
+# tasks file for webserver
+- name: Installing http
+  package: name=httpd state=present
+
+- name: Adding port
+  firewalld:
+    service: http
+    permanent: true
+    state: enabled
+
+- name: Installing git
+  package: name=git state=present
+
+- name: Cloning Repo
+  git: repo=https://github.com/demoglot/php.git dest=/var/www/html/
+
+- name: Installing php
+  package: name=php state=present
+
+- name: Installing PHP-MYSQL
+  package: name=php-mysql state=present
+
+- name: Starting http
+  service: name=httpd state=started enabled=yes
+
